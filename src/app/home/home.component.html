@@ -178,7 +178,8 @@
                                     style="font-size: 22px; line-height: 45px;">RS.</small>{{item.price}}
                             </h1>
                             <div *ngFor="let services of item.services" class="d-flex justify-content-between mb-3">
-                                <span>{{services}}</span><i class="fa fa-check text-success pt-1"></i></div>
+                                <span>{{services}}</span><i class="fa fa-check text-success pt-1"></i>
+                            </div>
                             <a routerLink="/checkout/{{item.id}}" class="btn btn-success py-2 px-4 mt-4">Order Now</a>
                         </div>
                     </div>
@@ -197,7 +198,7 @@
             <h1 class="mb-0">Easy Steps to Follow</h1>
         </div>
         <div class="row g-5">
-            <div class="col-6">
+            <div class="col-sm-6">
                 <div class="row g-5">
                     <div class="col-12 wow zoomIn" data-wow-delay="0.2s">
                         <div class="bg-success rounded d-flex align-items-center justify-content-center mb-3"
@@ -226,7 +227,7 @@
                         src="../assets/img/feature.jpg" style="object-fit: cover;">
                 </div>
             </div> -->
-            <div class="col-6">
+            <div class="col-sm-6">
                 <div class="row g-5">
 
                     <div class="col-12 wow zoomIn" data-wow-delay="0.6s">
@@ -292,35 +293,64 @@
                     </div>
                 </div>
                 <div class="col-lg-5">
-                    <div class="bg-success rounded h-100 d-flex align-items-center p-5 wow zoomIn"
+                    <div class="bg-success rounded h-100 d-flex align-items-center py-5 px-4 wow zoomIn"
                         data-wow-delay="0.9s">
-                        <form>
+                        <div style="position: absolute;left:40%;z-index:1" *ngIf="display_loading">
+                            <div class="col-12 content">
+                                <div class="load-wrapp">
+                                    <div class="load-3">
+                                        <div class="line"></div>
+                                        <div class="line"></div>
+                                        <div class="line"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <form [formGroup]="contact_form" (ngSubmit)="sendMessage()" [ngClass]="{blur:display_loading}">
                             <div class="row g-3">
                                 <div class="col-xl-12">
-                                    <input type="text" class="form-control bg-light border-0" placeholder="Your Name"
-                                        style="height: 55px;">
+                                    <input type="text" formControlName="name"
+                                        class="form-control bg-light border-0 py-3" placeholder="Your Name*">
+                                    <span *ngIf="name && name.touched && name.invalid" class="error px-2">This field is
+                                        required</span>
                                 </div>
                                 <div class="col-12">
-                                    <input type="email" class="form-control bg-light border-0" placeholder="Your Email"
-                                        style="height: 55px;">
+                                    <input type="email" formControlName="email"
+                                        class="form-control bg-light border-0 py-3" placeholder="Your Email*"
+                                        (keyup)="resetError()">
+                                    <span *ngIf="email && email.touched && email.invalid" class="error px-2">This field
+                                        is
+                                        invalid</span>
+                                    <span *ngIf="!emailexist" class="error px-3">Email does not exist</span>
                                 </div>
                                 <div class="col-12">
-                                    <select class="form-select bg-light border-0" style="height: 55px;">
-                                        <option selected>Select A Service</option>
-                                        <option value="1">Enter Level Package</option>
-                                        <option value="2">Mid Level Package</option>
-                                        <option value="3">Executive Level Package</option>
-                                        <option value="3">Cover Letter</option>
-                                        <option value="3">Linkedin</option>
-                                        <option value="3">Biography</option>
+                                    <select class="form-select bg-light border-0 py-3" formControlName="subject">
+                                        <option disabled value="null">Select A Service</option>
+                                        <option value="Entry Level Package">Entry Level Package</option>
+                                        <option value="Mid Level Package">Mid Level Package</option>
+                                        <option value="Executive Level Package">Executive Level Package</option>
+                                        <option value="Cover Letter">Cover Letter</option>
+                                        <option value="Linkedin">Linkedin</option>
+                                        <option value="Biography">Biography</option>
                                     </select>
                                 </div>
                                 <div class="col-12">
-                                    <textarea class="form-control bg-light border-0" rows="3"
+                                    <textarea formControlName="message" class="form-control bg-light border-0" rows="3"
                                         placeholder="Message"></textarea>
+                                    <span *ngIf="message && message.touched && message.invalid" class="error px-2">This
+                                        field is
+                                        required</span>
                                 </div>
                                 <div class="col-12">
-                                    <button class="btn btn-secondary w-100 py-3" type="submit">Send Message</button>
+                                    <p class="text-white"><input type="checkbox" id="checkbox" name="checkbox"
+                                            checked=""> Yes, I
+                                        would
+                                        like to receive communications by
+                                        call / email about Company's services. </p>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-secondary w-100 py-3" type="submit"
+                                        [disabled]="!contact_form.valid">Send Message</button>
                                 </div>
                             </div>
                         </form>

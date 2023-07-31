@@ -10,17 +10,17 @@ import { TermsComponent } from './terms/terms.component';
 
 const routes: Routes = [
   {
-    path:'home',
+    path:'',
     component:HomeComponent
   },
   {
     path:'about',
     component:AboutComponent
   },
-  {
-    path:'samples',
-    component:SamplesComponent
-  },
+  // {
+  //   path:'samples',
+  //   component:SamplesComponent
+  // },
   {
     path:'terms-and-conditions',
     component:TermsComponent
@@ -28,11 +28,6 @@ const routes: Routes = [
   {
     path:'privacy-policy',
     component:PolicyComponent
-  },
-  {
-    path:'',
-    redirectTo:"home",
-    pathMatch:"full"
   },
   {
     path:'checkout/:id',

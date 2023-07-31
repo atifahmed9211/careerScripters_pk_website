@@ -133,8 +133,8 @@
         <div class="page-content">
             <div class="container-fluid">
 
-                <div class="row">
-                    <div class="col-lg-12">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 py-4">
                         <div class="card">
                             <div class="card-body">
                                 <h1 class="text-center">Billing Invoice</h1>
@@ -215,6 +215,57 @@
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="bg-success align-items-center px-4 py-5 wow zoomIn"
+                            data-wow-delay="0.9s" style="position: relative;border-radius: 15px;">
+                            <div style="position: absolute;left:40%;z-index:1" *ngIf="display_loading">
+                                <div class="col-12 content">
+                                    <div class="load-wrapp">
+                                        <div class="load-3">
+                                            <div class="line"></div>
+                                            <div class="line"></div>
+                                            <div class="line"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <form [formGroup]="userInfo_form" (ngSubmit)="sendMessage()"
+                                [ngClass]="{blur:display_loading}">
+                                <h1 class="text-center text-white mb-5">Account Detail</h1>
+                                <p class="text-center text-white mb-5">Please share your detail with us so that our representative will get back to you.</p>
+                                <div class="row g-3">
+                                    <div class="col-xl-12">
+                                        <input type="text" formControlName="name"
+                                            class="form-control bg-light border-0 py-3" placeholder="Your Name*">
+                                        <span *ngIf="name && name.touched && name.invalid" class="error px-2">This field
+                                            is
+                                            required</span>
+                                    </div>
+                                    <div class="col-12">
+                                        <input type="email" formControlName="email"
+                                            class="form-control bg-light border-0 py-3" placeholder="Your Email*"
+                                            (keyup)="resetError()">
+                                        <span *ngIf="email && email.touched && email.invalid" class="error px-2">This
+                                            field
+                                            is
+                                            invalid</span>
+                                        <span *ngIf="!emailexist" class="error px-3">Email does not exist</span>
+                                    </div>
+                                    <div class="col-xl-12">
+                                        <input type="tel" formControlName="phone_no"
+                                            class="form-control bg-light border-0 py-3" placeholder="Your Mobile No*">
+                                        <span *ngIf="phone_no && phone_no.touched && phone_no.invalid" class="error px-2">This field
+                                            is
+                                            required</span>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-secondary w-100 py-3" type="submit"
+                                            [disabled]="!userInfo_form.valid">Place Order</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
